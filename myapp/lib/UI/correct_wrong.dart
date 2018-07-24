@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:flutter/material.dart';
+
 
 class CorrectWrongOverlay extends StatefulWidget {
 
@@ -24,6 +25,12 @@ class CorrectWrongOverlayState extends State<CorrectWrongOverlay> with SingleTic
     _iconAnimation = new CurvedAnimation(parent: _iconAnimationController, curve: Curves.elasticInOut);
     _iconAnimation.addListener(() => this.setState(() {}));
     _iconAnimationController.forward();
+  }
+
+  @override
+  void dispose() {
+    _iconAnimationController.dispose();
+    super.dispose();
   }
 
   @override

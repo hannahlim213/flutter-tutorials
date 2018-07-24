@@ -7,6 +7,8 @@ import '../UI/answer_button.dart';
 import '../UI/question_text.dart';
 import '../UI/correct_wrong.dart';
 
+import '../pages/score_page.dart';
+
 class QuizPage extends StatefulWidget {
   @override
   State createState() => new QuizPageState();
@@ -16,7 +18,7 @@ class QuizPageState extends State<QuizPage> {
   
   Question currentQuestion;
   Quiz quiz = new Quiz([
-    new Question("Elon Musk is human", false),
+    new Question("Elon Musk is human", true),
     new Question("Pizza is health", false),
     new Question("Flutter is awesome", true)
   ]);
@@ -50,21 +52,25 @@ class QuizPageState extends State<QuizPage> {
         new Column(
           //This is our main page
           children: <Widget>[
-            new AnswerButton(true, () => handleAnswer(true)),
+            new AnswerButton(true, () => handleAnswer(true)), //true button
             new QuestionText(questionText, questionNumber),
-            new AnswerButton(false, () => handleAnswer(false)),
+            new AnswerButton(false, () => handleAnswer(false)), // false button
           ],
         ),
         overlayShouldbeVisible == true ? new CorrectWrongOverlay(
           isCorrect,
           () {
-          currentQuestion = quiz.nextQuestion;
-          this.setState(() {
-            overlayShouldbeVisible = false;
-            questionText = currentQuestion.question;
-            questionNumber = quiz.questionNumber;
-          });
-        }
+            if (quiz.length == questionNumber) {
+              Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new ScorePage(quiz.score, quiz.length)));
+              return;
+            }
+            currentQuestion = quiz.nextQuestion;
+            this.setState(() {
+              overlayShouldbeVisible = false;
+              questionText = currentQuestion.question;
+              questionNumber = quiz.questionNumber;
+            });
+          }
         ) : new Container()
       ],
     );
