@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 class CorrectWrongOverlay extends StatefulWidget {
 
@@ -18,6 +19,9 @@ class CorrectWrongOverlayState extends State<CorrectWrongOverlay> with SingleTic
   void initState() {
     super.initState();
     _iconAnimationController = new AnimationController(duration: new Duration(seconds: 2), vsync: this);
+    _iconAnimation = new CurvedAnimation(parent: _iconAnimationController, curve: Curves.elasticInOut);
+    _iconAnimation.addListener(() => this.setState(() {}));
+    _iconAnimationController.forward();
   }
 
   @override
@@ -34,7 +38,10 @@ class CorrectWrongOverlayState extends State<CorrectWrongOverlay> with SingleTic
                 color: Colors.white,
                 shape: BoxShape.circle
               ),
-              child: new Icon(widget._isCorrect == true ? Icons.done : Icons.clear, size: 80.0),
+              child: new Transform.rotate(
+                angle: _iconAnimation.value * 2 * PI,
+                child: new Icon(widget._isCorrect == true ? Icons.done : Icons.clear, size: _iconAnimation.value * 80.0),
+            ),
             ),
             new Padding(
               padding: new EdgeInsets.only(bottom: 20.0),
