@@ -3,8 +3,8 @@ import './questions.dart';
 class Quiz {
   // underscore for private variables. so user cannot access or delete them
   List<Question> _questions;
-  int _currentQuestionIndex =1;
-  int _score =0;
+  int _currentQuestionIndex = -1;
+  int _score = 0;
 
   Quiz(this._questions) {
     _questions.shuffle();

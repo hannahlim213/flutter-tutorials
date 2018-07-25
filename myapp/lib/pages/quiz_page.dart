@@ -7,7 +7,7 @@ import '../UI/answer_button.dart';
 import '../UI/question_text.dart';
 import '../UI/correct_wrong.dart';
 
-import '../pages/score_page.dart';
+import './score_page.dart';
 
 class QuizPage extends StatefulWidget {
   @override
@@ -61,7 +61,7 @@ class QuizPageState extends State<QuizPage> {
           isCorrect,
           () {
             if (quiz.length == questionNumber) {
-              Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new ScorePage(quiz.score, quiz.length)));
+              Navigator.of(context).pushAndRemoveUntil(new MaterialPageRoute(builder: (BuildContext context) => new ScorePage(quiz.score, quiz.length)), (Route route) => route == null);
               return;
             }
             currentQuestion = quiz.nextQuestion;
